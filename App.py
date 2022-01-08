@@ -13,10 +13,8 @@ App.config['SESSION_TYPE'] = 'filesystem'
 bootstrap = Bootstrap(App)
 login_manager=LoginManager()
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-
 Session(App)
-App.config['default'].update(db_from_env)
+App.config['SQLALCHEMY_DATABASE_URI']='sqlite:///db.sqlite3'
 
 db=SQLAlchemy(App)
 
