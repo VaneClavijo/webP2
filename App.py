@@ -14,9 +14,8 @@ bootstrap = Bootstrap(App)
 login_manager=LoginManager()
 
 
-App.config['SQLALCHEMY_DATABASE_URL']='postgres://yfhnvhwqisrefo:8a016092f45a3ec9bcab80e8b19fdcb9e58eb6f3146382593970b45acd83f19f@ec2-35-173-83-57.compute-1.amazonaws.com:5432/d5s4c0lso3brg0'
+App.config['SQLALCHEMY_DATABASE_URI']='postgres://yfhnvhwqisrefo:8a016092f45a3ec9bcab80e8b19fdcb9e58eb6f3146382593970b45acd83f19f@ec2-35-173-83-57.compute-1.amazonaws.com:5432/d5s4c0lso3brg0'
 
-App.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
 db=SQLAlchemy(App)
 
 from werkzeug.middleware.proxy_fix import ProxyFix
