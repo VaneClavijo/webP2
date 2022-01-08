@@ -1,5 +1,5 @@
 from flask import Flask, session
-from flask_session import Session  # https://pythonhosted.org/Flask-Session
+from flask_session import session  # https://pythonhosted.org/Flask-Session
 import dj_database_url
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -13,7 +13,7 @@ App.config['SESSION_TYPE'] = 'filesystem'
 bootstrap = Bootstrap(App)
 login_manager=LoginManager()
 
-Session(App)
+session(App)
 App.config['SQLALCHEMY_DATABASE_URI']='sqlite:///db.sqlite3'
 
 db=SQLAlchemy(App)
