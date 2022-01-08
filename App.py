@@ -14,7 +14,7 @@ bootstrap = Bootstrap(App)
 login_manager=LoginManager()
 
 
-App.config['SQLALCHEMY_DATABASE_URI']='sqlite:///db.sqlite3'
+App.config['SQLALCHEMY_DATABASE_URI']='DATABASE_URL'
 
 App.config['SQLALCHEMY_TRACK_MODIFICATIONS']=True
 db=SQLAlchemy(App)
