@@ -1,6 +1,6 @@
 from flask import Flask, session
 from flask_session import Session  # https://pythonhosted.org/Flask-Session
-
+import dj_database_url
 from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_bootstrap import Bootstrap
@@ -13,8 +13,10 @@ App.config['SESSION_TYPE'] = 'filesystem'
 bootstrap = Bootstrap(App)
 login_manager=LoginManager()
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+
 Session(App)
-App.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:admin@localhost/ingenieria_web'
+App.config['default'].update(db_from_env)
 
 db=SQLAlchemy(App)
 
