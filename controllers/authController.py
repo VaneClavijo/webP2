@@ -4,7 +4,7 @@ from flask import render_template, session, request, redirect, url_for
 from App import App
 from wtforms import StringField, PasswordField,SubmitField
 from flask_wtf import FlaskForm
-from wtforms.validators import Required,Length
+from wtforms.validators import DataRequired,Length
 from models.models import User
 from flask import flash
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -19,8 +19,8 @@ def admin_profile():
 @App.route('/login',methods=['POST', 'GET'])
 def login():
     class LoginForm(FlaskForm):
-        username = StringField(u'', validators=[Length(max=10),Required()])
-        password = PasswordField(u'', validators=[Required()])
+        username = StringField(u'', validators=[Length(max=10),DataRequired()])
+        password = PasswordField(u'', validators=[DataRequired()])
         submit = SubmitField('Entrar')
     def login_user(User):
         session["id"]=User.user_ci
