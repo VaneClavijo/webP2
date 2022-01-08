@@ -53,90 +53,84 @@ $(document).ready(function() {
 </ul>
 {%endif%}
 {%endwith%}
-
+<form class="card-body" action="{{ url_for('amount_contact_report') }}" method="POST">
     <div class="shadow p-3 mb-5 text-center-white rounded" style="border:20px;">
         <h1 class="text-center">REPORTE DE CONTRATOS</h1>
+        <div class="form-group">
+            <label>Ingrese la fecha de Inicio:</label>
+            <input type="date" class="form-control" name="date"  id="date" >
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+        </div>
     </div>
-
+</form>
 
 <div class="shadow p-3 mb-5 bg-white rounded">
     <div class="card-header bi-text-left" style="background-color: #E6E5E4; color: midnightblue;">
-        <h4>CONTRATOS ACTIVOS</h4>
+        <h4>CONTRATOS</h4>
+        <div class="card shadow">
+            <div class="row">
+                <div class="col">
+                    <div class=label style="background-color: #E6E5E4; color: midnightblue;">
+                        <h5>SUMATORIA:</h5>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class=label>
+                        <h5>{{sumaA}}</h5>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
         <table id="example1" class="table table-hover table-bordered" style="width: 100%;">
             <thead>
                 <tr class="text-center" style="background-color: #F0F0F0; color: midnightblue;">
                     <th scope="col">Proveedor</th>
                     <th scope="col">Objeto</th>
-                    <th scope="col">Indicador</th>
-                    <th scope="col">Meta</th>
-                    <th scope="col">Calificar</th>
+                    <th scope="col">Inicio</th>
+                    <th scope="col">Fin</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Cantidad</th>
                 </tr>
             </thead>
             <tbody>
-                {% if not cons%}
+                {% if not contracts%}
                 <tr>
                     <th scope="row">No hay registro</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
                 {% endif %}
-                {% for c in cons%}
+                {% for c in contracts%}
                     <tr class="text-center">
-                        <form action="/add_score"method="POST">
-                        <td>{{c[0][0]}}</td>
-                        <td>{{c[0][1]}}</td>
-                        <td>{{c[1].level_name}}</td>
-                        <td>{{c[1].level_goal}}</td>
-                        <input id="idin" name="idin" type="hidden" value={{c[1].level_id}}>
-                        <td>
-                            <div class="d-grid mx-auto my-auto">
-                                <a href="/add_score" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modaledit{{c[1].level_id}}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="midnightblue" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                                    </svg>
-                                </a>
-                            </div>
-                        </td>
+                        <form action="/contract_report"method="POST">
+                        <td>{{c.contract_provider}}</td>
+                        <td>{{c.contract_name}}</td>
+                        <td>{{c.contract_start}}</td>
+                        <td>{{c.contract_end}}</td>
+                        <td>{{c.contract_state}}</td>
+                        <td>{{c.contract_amount}}</td>
+                        <input id="idin" name="idin" type="hidden" value={{c.contract_id}}>
+
                         </form>
                     </tr>
-                    <div id="modaledit{{c[1].level_id}}" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Agregar Calificacion</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{{url_for('add_score')}}" method="POST">
-                                        <input id="idin" name="idin" type="hidden" value={{c[1].level_id}}>
-                                        <div class="col-sm-3 justify-content-start">
-                                            <div class="input-group-lg">
-                                                <div class="form-group">
-                                                    <label>Calificacion:</label>
-                                                    <input type="number" class="form-control" name="score_value" required>
-                                                </div>
-                                            </div>
-                                        </div>
 
-
-                                    <div class="form-group">
-                                        <button class="btn btn-primary" type="submit">Guardar</button>
-                                    </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
+
+
+
+
 </div>
 </div>
 </form>

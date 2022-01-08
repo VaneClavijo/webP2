@@ -39,11 +39,13 @@ class Contract(db.Model):
     contract_start= db.Column(db.Date,nullable=False)
     contract_end=db.Column(db.Date,nullable=False)
     contract_close=db.Column(db.Date)
+    contract_amount=db.Column(db.Float,nullable=False)
     contract_state=db.Column(db.String(10),nullable=False)
     contract_instate=db.Column(db.String(10))
     manager_id = db.Column(db.Integer, db.ForeignKey(Manager.manager_id))
     manager= relationship("Manager", back_populates="contract")
     level=relationship("Level",back_populates="contract")
+
 
 class Level(db.Model):
     __tablename__ = 'level'

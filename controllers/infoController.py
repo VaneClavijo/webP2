@@ -58,8 +58,29 @@ def level_contract_report():
 @App.route('/close_contract_report', methods=['POST', 'GET'])
 def close_contract_report():
     contracts=Contract.query.filter(Contract.contract_state=='CERRADO').all()
-    #db.session.query(User).join( Document ).join( DocumentsPermissions ).filter( User.email == "user@email.com" ).all()
     return render_template('closeContractReport.html', contracts = contracts)
+
+
+
+@App.route('/amount_contact_report', methods=['POST', 'GET'])
+def amount_contact_report():
+    contracts=Contract.query.filter().all()
+    sumaA=0
+    for c in contracts:
+        sumaA=sumaA+c.contract_amount
+        if c.contract_end<date.today() and c.contract_state=='VIGENTE':
+            db.session.query(Contract).filter(Contract.contract_id==c.contract_id).update(dict(contract_state='VENCIDO'))
+            db.session.commit()
+    if request.method == 'POST':
+        filteredDate=request.form['date']
+        print(filteredDate)
+        contracts=Contract.query.filter(Contract.contract_start>=filteredDate).all()
+        print('\n','\n','\n',contracts)
+        sumaA=0
+        for c in contracts:
+            sumaA=sumaA+c.contract_amount
+        return render_template('amountReport.html', contracts = contracts,sumaA=sumaA)
+    return render_template('amountReport.html', contracts = contracts,sumaA=sumaA)
 
 
 
