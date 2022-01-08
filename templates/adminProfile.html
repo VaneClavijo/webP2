@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form class="card-body" action="{{ url_for('admin_profile') }}" method="GET">
+
+	{%if session['id']%}
+		{% if session['type']=='A' %}
+		<div class="card">
+			<div class="card-body">
+				<div class="card text-center">
+					<nav style="background:midnightblue">
+						<h1><a class="navbar-brand text-white" href="#">PERFIL DE ADMINISTRADOR</a></h1>
+					</nav>
+				</div>
+				<br>
+				<div class="card text-center">
+					<div class="row justify-content-center">
+						<div class="col-sm-5 justify-content-start">
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<a class="btn btn-primary " type="button" href="{{ url_for('add_manager') }}">REGISTRAR GESTOR</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="card text-center">
+					<div class="row justify-content-center">
+						<div class="col-sm-5 justify-content-start">
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<a class="btn btn-primary " type="button" href="{{ url_for('contract_report') }}">ASIGNAR GESTOR</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="card text-center">
+					<div class="row justify-content-center">
+						<div class="col-sm-5 justify-content-start">
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<a class="btn btn-primary " type="button" href="{{ url_for('contract_report') }}">CONTRATOS CERRADOS</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="card text-center">
+					<div class="row justify-content-center">
+						<div class="col-sm-5 justify-content-start">
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<a class="btn btn-primary " type="button" href="{{ url_for('level_contract_report') }}">AGREGAR METRICAS</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="card text-center">
+					<div class="row justify-content-center">
+						<div class="col-sm-5 justify-content-start">
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<a class="btn btn-primary " type="button" href="{{ url_for('statistics') }}">ESTADISTICA</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+		{%elif session['type']=='M' %}
+		<div class="card">
+			<div class="card-body">
+				<div class="card text-center">
+					<nav style="background:midnightblue">
+						<h1><a class="navbar-brand text-white" href="#">PERFIL DE GESTOR</a></h1>
+					</nav>
+				</div>
+				<br>
+				<br>
+				<div class="card text-center">
+					<div class="row justify-content-center">
+						<div class="col-sm-5 justify-content-start">
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<a class="btn btn-primary " type="button" href="{{ url_for('contract_report') }}">CERRAR CONTRATO</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="card text-center">
+					<div class="row justify-content-center">
+						<div class="col-sm-5 justify-content-start">
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<a class="btn btn-primary " type="button" href="{{ url_for('add_score') }}">CALIFICAR METRICA</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+		{% endif %}
+		{%else%}
+		<div class="card">
+			<div class="card-body">
+				<div class="card text-center">
+					<nav style="background:midnightblue">
+						<h1 class="card-title-center text-white">HERRAMIENTA DE CONTROL DE CONTRATOS</h1>
+						<br>
+						<h3 class="card-title-center text-white">POR FAVOR INGRESA CON TUS CREDENCIALES</h3>
+					</nav>
+				</div>
+				<br>
+			</div>
+		</div>
+		{% endif %}
+</form>
+{% endblock %}
+
+
+

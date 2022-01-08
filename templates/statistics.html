@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>DataTables example - HTML (DOM) sourced data</title>
+	<link rel="shortcut icon" type="image/png" href="/media/images/favicon.png">
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+	<link rel="stylesheet" type="text/css" href="/media/css/site-examples.css?_=94461d89946ef749b7a43d14685c725d1">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href=" https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js">
+
+	<style type="text/css" class="init">
+
+	</style>
+	<script type="text/javascript" src="/media/js/site.js?_=0c32e5cdbe9b575086edb0b907646184"></script>
+	<script type="text/javascript" src="/media/js/dynamic.php?comments-page=examples%2Fdata_sources%2Fdom.html" async></script>
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" language="javascript" src="../resources/demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script type="text/javascript" class="init">
+
+
+$(document).ready(function() {
+    var table = $('#example').DataTable( {
+        "scrollX": true
+    } );
+
+    new $.fn.dataTable.FixedHeader( table );
+} );
+$(document).ready(function() {
+    var table = $('#example1').DataTable( {
+        "scrollX": true
+    } );
+
+    new $.fn.dataTable.FixedHeader( table );
+} );
+
+
+	</script>
+</head>
+
+{%with messages=get_flashed_messages()%}
+{%if messages %}
+<ul>
+	{%for message in messages%}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <li>{{message}}</li>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+	{%endfor%}
+</ul>
+{%endif%}
+{%endwith%}
+
+    <div class="shadow p-3 mb-5 text-center-white rounded" style="border:20px;">
+        <h1 class="text-center">CUMPLIMIENTO DE CONTRATOS</h1>
+        <br>
+        <h4 >CONTRATOS MONITOREADOS: {{ contador}}%</h4>
+        <h4 >SALUD MENSUAL: {{ acumuladoM}}%</h4>
+        <h4 >SALUD ANUAL: {{ acumuladoA}}%</h4>
+    </div>
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="card-header bi-text-left" style="background-color: #E6E5E4; color: midnightblue;"><h4>CONTRATOS MONITOREADOS</h4></div>
+        <table id="example1" class="table table-hover table-bordered" style="width: 100%;">
+            <thead>
+                <tr class="text-center" style="background-color: #F0F0F0; color: midnightblue;">
+                    <th scope="col">Proveedor</th>
+                    <th scope="col">Objeto</th>
+                    <th scope="col">Mensual</th>
+                    <th scope="col">Anual</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if not cons%}
+                <tr>
+                    <th scope="row">No hay registro</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                {% endif %}
+                {% for c in cons%}
+                    <tr class="text-center">
+                        <form action="/statistics"method="POST">
+                        <td>{{c[0].contract_provider}}</td>
+                        <td>{{c[0].contract_name}}</td>
+                        <td>{{c[1][1]}}</td>
+                        <td>{{c[1][0]}}</td>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+</div>
+</div>
+</form>
+<div class="row justify-content-center">
+    <div class="col-sm-1">
+        <div class="card text-center bg-transparent">
+            <a class="btn btn-outline-light" type="button" href="{{ url_for('admin_profile') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="midnightblue" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+

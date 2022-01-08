@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>DataTables example - HTML (DOM) sourced data</title>
+	<link rel="shortcut icon" type="image/png" href="/media/images/favicon.png">
+	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+	<link rel="stylesheet" type="text/css" href="/media/css/site-examples.css?_=94461d89946ef749b7a43d14685c725d1">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href=" https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js">
+
+	<style type="text/css" class="init">
+
+	</style>
+	<script type="text/javascript" src="/media/js/site.js?_=0c32e5cdbe9b575086edb0b907646184"></script>
+	<script type="text/javascript" src="/media/js/dynamic.php?comments-page=examples%2Fdata_sources%2Fdom.html" async></script>
+	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" language="javascript" src="../resources/demo.js"></script>
+	<script type="text/javascript" class="init">
+
+
+$(document).ready(function() {
+    var table = $('#example').DataTable( {
+        "scrollX": true
+    } );
+
+    new $.fn.dataTable.FixedHeader( table );
+} );
+$(document).ready(function() {
+    var table = $('#example1').DataTable( {
+        "scrollX": true
+    } );
+
+    new $.fn.dataTable.FixedHeader( table );
+} );
+
+	</script>
+</head>
+
+{%with messages=get_flashed_messages()%}
+{%if messages %}
+<ul>
+	{%for message in messages%}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <li>{{message}}</li>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+	{%endfor%}
+</ul>
+{%endif%}
+{%endwith%}
+<form class="card-body" action="{{ url_for('contract_report') }}" method="POST">
+    <div class="shadow p-3 mb-5 text-center-white rounded" style="border:20px;">
+        <h1 class="text-center">REPORTE DE CONTRATOS</h1>
+    </div>
+</form>
+
+<div class="shadow p-3 mb-5 bg-white rounded">
+    <div class="card-header bi-text-left" style="background-color: #E6E5E4; color: midnightblue;"><h4>CONTRATOS ACTIVOS</h4></div>
+        <table id="example1" class="table table-hover table-bordered" style="width: 100%;">
+            <thead>
+                <tr class="text-center" style="background-color: #F0F0F0; color: midnightblue;">
+                    <th scope="col">Proveedor</th>
+                    <th scope="col">Objeto</th>
+                    <th scope="col">Gestor</th>
+                    <th scope="col"># Metricas</th>
+                    <th scope="col">Resgistrar Metricas</th>
+                    <th scope="col">LISTO</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% if not contractg%}
+                <tr>
+                    <th scope="col">No hay registro</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    </tr>
+                {% endif %}
+                {% for c in contractg%}
+                    <tr class="text-center">
+                        <form action="/level_contract_report"method="POST">
+                        <td>{{c[1]}}</td>
+                        <td>{{c[2]}}</td>
+                        <td>{{c[3]}}</td>
+                        <td>{{c[4]}}</td>
+
+                        <input id="idin" name="idin" type="hidden" value={{c[0]}}>
+                        <td>
+                            <div class="d-grid mx-auto my-auto">
+                                <a href="/add_level" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#modaledit{{c[0]}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="midnightblue" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('level_contract_report') }}" method="POST">
+                                <div class="d-grid mx-auto my-auto">
+                                    <button type="submit" class="btn btn-outline-light"  onclick="return confirm('Una vez guardado, no podra editar?')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="midnightblue" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                            <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                                          </svg>
+                                </div>
+                            </form>
+                        </td>
+                        </form>
+                    </tr>
+                    <div id="modaledit{{c[0]}}" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Agregar Indicador</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {% for l in c[5]%}
+                                    <li>{{l.level_name}}-{{l.level_goal}}</li>
+                                    {% endfor %}
+                                    <form action="{{url_for('add_level')}}" method="POST">
+
+                                    <div class="form-group">
+                                        <label>Nombre Indicador:</label>
+                                        <input type="hidden"  name="contract_id" value="{{c[0]}}">
+                                        <input type="text" class="form-control"  name="level_name"  id="level_name" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Meta:</label>
+                                        <input type="number" class="form-control" name="level_goal" required">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+</div>
+</div>
+</form>
+<div class="row justify-content-center">
+    <div class="col-sm-1">
+        <div class="card text-center bg-transparent">
+            <a class="btn btn-outline-light" type="button" href="{{ url_for('admin_profile') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="midnightblue" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+
